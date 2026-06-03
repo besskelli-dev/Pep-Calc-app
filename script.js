@@ -30,7 +30,7 @@ const fieldErrors = {
   doseValue: document.getElementById("doseValueError")
 };
 
-let doseUnit = "mcg";
+let doseUnit = "mg";
 let deferredInstallPrompt = null;
 const peptideLibraryData = Array.isArray(window.PEPTIDE_LIBRARY) ? window.PEPTIDE_LIBRARY : [];
 

@@ -49,11 +49,11 @@
         <span class="label-text">Desired dose</span>
         <div class="input-row">
           <input type="number" id="doseValue" placeholder="e.g. 250" step="0.001" min="0" inputmode="decimal" aria-describedby="doseValueError doseHint">
-          <span class="unit" id="doseDisplayUnit">mcg</span>
+          <span class="unit" id="doseDisplayUnit">mg</span>
         </div>
         <div id="doseToggle" class="toggle" role="group" aria-label="Dose unit">
-          <button type="button" class="toggle-btn active" data-unit="mcg" aria-pressed="true">mcg</button>
-          <button type="button" class="toggle-btn" data-unit="mg" aria-pressed="false">mg</button>
+          <button type="button" class="toggle-btn" data-unit="mcg" aria-pressed="false">mcg</button>
+          <button type="button" class="toggle-btn active" data-unit="mg" aria-pressed="true">mg</button>
         </div>
         <div class="helper-row">
           <button id="convertDoseBtn" type="button" class="ghost-btn">Convert Dose Unit</button>
