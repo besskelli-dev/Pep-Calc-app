@@ -297,11 +297,14 @@ function showResult(values, result) {
         ' mg = <strong>' + PeptideCalc.round(dosesPerVialExact, 2) + ' doses</strong>; practical: <strong>' + practicalSummary + '</strong></div>' +
     "</div>" +
     '<div class="timestamp">Calculated: ' + timestamp + "</div>";
+
+  scrollToResult();
 }
 
 function showError(message) {
   resultBox.className = "result error";
   resultBox.innerHTML = '<div class="msg">' + message + "</div>";
+  scrollToResult();
 }
 
 function resetResult() {
@@ -368,6 +371,13 @@ function updateConfidenceState() {
   } else {
     confidenceMsg.textContent = "Check both items to enable Calculate.";
   }
+}
+
+function scrollToResult() {
+  resultBox.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
 }
 
 function switchView(viewName) {
