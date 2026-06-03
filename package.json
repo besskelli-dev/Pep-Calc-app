@@ -1,0 +1,10 @@
+{
+  "name": "pep-calc-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Peptide reconstitution safety calculator",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  }
+}

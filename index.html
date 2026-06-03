@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peptide Reconstitution Calculator</title>
+  <meta name="theme-color" content="#1a2420">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="card">
+    <header>
+      <h1>Reconstitution Calculator</h1>
+      <p class="subtitle">Work out peptide dose math safely, step by step.</p>
+    </header>
+
+    <section class="view-switch" aria-label="App sections">
+      <button id="calcViewBtn" type="button" class="view-btn active" aria-pressed="true">Calculator</button>
+      <button id="libraryViewBtn" type="button" class="view-btn" aria-pressed="false">Safety Library</button>
+    </section>
+
+    <section id="calculatorView">
+
+    <section class="inputs">
+      <label>
+        <span class="label-text">Peptide in the vial</span>
+        <div class="input-row">
+          <input type="number" id="peptideMg" placeholder="e.g. 5" step="0.001" min="0" inputmode="decimal" aria-describedby="peptideMgError peptideHint">
+          <span class="unit">mg</span>
+        </div>
+        <span id="peptideHint" class="hint">The total amount printed on the vial.</span>
+        <span id="peptideMgError" class="field-error" aria-live="polite"></span>
+      </label>
+
+      <label>
+        <span class="label-text">Water you added</span>
+        <div class="input-row">
+          <input type="number" id="waterMl" placeholder="e.g. 2" step="0.001" min="0" inputmode="decimal" aria-describedby="waterMlError waterHint">
+          <span class="unit">mL</span>
+        </div>
+        <span id="waterHint" class="hint">Bacteriostatic water you mixed in.</span>
+        <span id="waterMlError" class="field-error" aria-live="polite"></span>
+      </label>
+
+      <label>
+        <span class="label-text">Desired dose</span>
+        <div class="input-row">
+          <input type="number" id="doseValue" placeholder="e.g. 250" step="0.001" min="0" inputmode="decimal" aria-describedby="doseValueError doseHint">
+          <span class="unit" id="doseDisplayUnit">mcg</span>
+        </div>
+        <div id="doseToggle" class="toggle" role="group" aria-label="Dose unit">
+          <button type="button" class="toggle-btn active" data-unit="mcg" aria-pressed="true">mcg</button>
+          <button type="button" class="toggle-btn" data-unit="mg" aria-pressed="false">mg</button>
+        </div>
+        <div class="helper-row">
+          <button id="convertDoseBtn" type="button" class="ghost-btn">Convert Dose Unit</button>
+        </div>
+        <span id="doseHint" class="hint">Choose whether your dose number is in mcg or mg.</span>
+        <span id="doseValueError" class="field-error" aria-live="polite"></span>
+      </label>
+    </section>
+
+    <section class="presets" aria-label="Quick presets">
+      <h2>Quick Presets</h2>
+      <div class="preset-grid">
+        <button type="button" class="preset-btn" data-peptide="5" data-water="2">5 mg + 2 mL</button>
+        <button type="button" class="preset-btn" data-peptide="10" data-water="2">10 mg + 2 mL</button>
+        <button type="button" class="preset-btn" data-peptide="10" data-water="3">10 mg + 3 mL</button>
+        <button type="button" class="preset-btn" data-peptide="15" data-water="3">15 mg + 3 mL</button>
+      </div>
+    </section>
+
+    <section class="output-mode" aria-label="Result display mode">
+      <h2>Output Display</h2>
+      <div class="mode-grid" id="outputMode">
+        <label><input type="radio" name="mode" value="both" checked> Units + mL</label>
+        <label><input type="radio" name="mode" value="units"> Units only</label>
+        <label><input type="radio" name="mode" value="ml"> mL only</label>
+      </div>
+      <p class="u100-note"><strong>U-100 reminder:</strong> 100 syringe units = 1 mL of liquid, not 100 mg.</p>
+    </section>
+
+    <section class="safety-checklist" aria-label="Safety checklist">
+      <h2>Before You Use Any Number</h2>
+      <ul>
+        <li>Confirm vial strength matches the label in your hand.</li>
+        <li>Confirm your dose unit is correct: mcg vs mg.</li>
+        <li>Confirm your syringe type is U-100 before using units.</li>
+        <li>If unsure, stop and verify with a licensed clinician or pharmacist.</li>
+      </ul>
+    </section>
+
+    <section class="confidence-check" aria-label="Confidence check">
+      <h2>Confidence Check</h2>
+      <label class="check-item">
+        <input type="checkbox" id="confirmUnit">
+        I confirmed my selected dose unit is correct.
+      </label>
+      <label class="check-item">
+        <input type="checkbox" id="confirmSyringe">
+        I confirmed I am using a U-100 insulin syringe.
+      </label>
+      <p id="confidenceMsg" class="hint">Check both items to enable Calculate.</p>
+    </section>
+
+    <button id="calcBtn" disabled>Calculate</button>
+
+    <section id="result" class="result hidden" aria-live="polite"></section>
+
+    <div class="result-actions">
+      <button id="installBtn" type="button" class="ghost-btn hidden">Install App</button>
+      <button id="printBtn" type="button" class="ghost-btn">Print Summary</button>
+    </div>
+
+    </section>
+
+    <section id="libraryView" class="library-view hidden" aria-label="Peptide safety library">
+      <h2>Peptide Safety Library</h2>
+      <p class="hint">Educational overview only. No dosing protocols are provided.</p>
+
+      <div class="library-controls">
+        <label>
+          <span class="label-text">Search peptides</span>
+          <div class="input-row">
+            <input id="librarySearch" type="text" placeholder="Search by name, category, risk..." aria-label="Search peptide library">
+          </div>
+        </label>
+
+        <div class="library-filters">
+          <label>
+            <span class="label-text">Status</span>
+            <select id="statusFilter">
+              <option value="all">All statuses</option>
+            </select>
+          </label>
+          <label>
+            <span class="label-text">Category</span>
+            <select id="categoryFilter">
+              <option value="all">All categories</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <p id="libraryCount" class="hint"></p>
+      <div id="libraryCards" class="library-cards"></div>
+    </section>
+
+    <section class="research-links" aria-label="Trusted research links">
+      <h2>Trusted Research Links</h2>
+      <p class="hint">Use these sources to verify safety information and published evidence.</p>
+      <ul>
+        <li><a href="https://www.fda.gov/drugs" target="_blank" rel="noopener noreferrer">U.S. FDA: Drug Information</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">NIH PubMed: Biomedical Literature</a></li>
+        <li><a href="https://www.ema.europa.eu/en/medicines" target="_blank" rel="noopener noreferrer">EMA: Medicines Database</a></li>
+        <li><a href="https://www.cdc.gov/medicationsafety/" target="_blank" rel="noopener noreferrer">CDC: Medication Safety</a></li>
+        <li><a href="https://medlineplus.gov/druginformation.html" target="_blank" rel="noopener noreferrer">MedlinePlus: Drug Information</a></li>
+      </ul>
+    </section>
+
+    <footer class="disclaimer">
+      <strong>This is not medical advice.</strong> This app only performs arithmetic.
+      It cannot determine whether a peptide plan is safe, legal, or appropriate.
+      Always confirm every dose with a licensed healthcare professional.
+    </footer>
+  </main>
+
+  <script src="calculator.js"></script>
+  <script src="peptide-library-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
