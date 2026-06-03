@@ -695,6 +695,11 @@ input:focus { outline: none; }
 }
 
 @media print {
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
   body {
     background: #ffffff;
     color: #000000;
@@ -723,5 +728,43 @@ input:focus { outline: none; }
     border: 1px solid #999;
     color: #000;
     background: #fff;
+  }
+
+  .syringe-visual {
+    border-color: #777;
+    background: #fff;
+  }
+
+  .syringe-title,
+  .syringe-meta,
+  .tick-label,
+  .result .headline,
+  .result .big-sub,
+  .result .work-title,
+  .result .work-line,
+  .result .timestamp {
+    color: #111;
+  }
+
+  .result .big,
+  .dose-count strong {
+    color: #000;
+  }
+
+  .syringe-bar {
+    border: 1px solid #333;
+    background: #fff;
+  }
+
+  .syringe-fill {
+    background: #9c9c9c;
+    box-shadow: none;
+    border-right: 2px solid #000;
+  }
+
+  .tick-line-top,
+  .tick.major .tick-line-top,
+  .tick.minor .tick-line-top {
+    background: #111;
   }
 }
