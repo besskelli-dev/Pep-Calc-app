@@ -239,6 +239,7 @@
     <section id="libraryView" class="library-view hidden" aria-label="Peptide safety library">
       <h2>Peptide Safety Library</h2>
       <p class="hint">Educational overview only. No dosing protocols are provided.</p>
+      <p id="libraryLastUpdated" class="hint library-last-updated" aria-live="polite"></p>
 
       <div class="library-controls">
         <label>
@@ -272,6 +273,15 @@
 
       <p id="libraryCount" class="hint"></p>
       <div id="libraryCards" class="library-cards"></div>
+
+      <section id="statusHistoryPanel" class="status-history-panel" aria-label="Recent library update history">
+        <div class="section-head">
+          <h3>Recent Library Changes</h3>
+          <button id="clearStatusHistoryBtn" type="button" class="mini-btn">Clear History</button>
+        </div>
+        <p id="statusHistoryEmpty" class="hint">No status changes detected on this device yet.</p>
+        <div id="statusHistoryList" class="status-history-list"></div>
+      </section>
     </section>
 
     <section class="research-links collapsible-card" aria-label="Trusted research links" data-collapsible>

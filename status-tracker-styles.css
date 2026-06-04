@@ -154,3 +154,48 @@
   width: 100%;
   margin-top: 0;
 }
+
+.library-last-updated {
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+
+.status-history-panel {
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(8, 24, 36, 0.45);
+}
+
+.status-history-panel h3 {
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--muted);
+}
+
+.status-history-list {
+  margin-top: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+.status-history-item {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.status-history-time {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.status-history-text {
+  font-size: 0.84rem;
+  color: var(--text);
+  line-height: 1.4;
+}
