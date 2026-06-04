@@ -4,8 +4,8 @@ window.PEPTIDE_LIBRARY = [
     category: "GLP-1 receptor agonist",
     status: "Approved (Rx)",
     evidenceLevel: "High",
-    overview: "GLP-1 receptor agonist studied and approved for glycemic control and chronic weight management in specific indications.",
-    useCases: ["Glycemic management", "Weight management", "Cardiometabolic risk context"],
+    overview: "GLP-1 receptor agonist studied and approved for glycemic control and chronic weight management in specific indications. Postmenopausal studies show metabolic benefits; muscle preservation strategies (resistance training) recommended during weight loss.",
+    useCases: ["Glycemic management", "Weight management", "Cardiometabolic risk context", "Postmenopausal metabolic health"],
     commonRisks: ["Nausea", "Vomiting", "Constipation"],
     contraindications: ["Personal/family history of medullary thyroid carcinoma", "MEN2"],
     sources: [
@@ -46,8 +46,8 @@ window.PEPTIDE_LIBRARY = [
     category: "Dual GIP/GLP-1 agonist",
     status: "Approved (Rx)",
     evidenceLevel: "High",
-    overview: "Dual incretin agonist (GIP and GLP-1 pathways) approved for specific glycemic and weight-related indications.",
-    useCases: ["Glycemic management", "Weight management"],
+    overview: "Dual incretin agonist (GIP and GLP-1 pathways) approved for specific glycemic and weight-related indications. Postmenopausal clinical data show greater cardiometabolic benefit compared to single agonists; muscle mass monitoring during weight loss is recommended.",
+    useCases: ["Glycemic management", "Weight management", "Postmenopausal metabolic health"],
     commonRisks: ["Nausea", "Vomiting", "Diarrhea"],
     contraindications: ["MTC/MEN2 history", "Severe GI disease caution"],
     sources: [
@@ -102,8 +102,8 @@ window.PEPTIDE_LIBRARY = [
     category: "Melanocortin receptor agonist",
     status: "Approved (Rx)",
     evidenceLevel: "Moderate",
-    overview: "Melanocortin agonist approved in specific sexual health indications for premenopausal women.",
-    useCases: ["Sexual health indication"],
+    overview: "Melanocortin agonist approved for specific sexual health indications. Originally approved for premenopausal women; emerging research explores postmenopausal sexual health contexts, though off-label use in postmenopausal populations requires clinical discussion and cardiovascular risk assessment.",
+    useCases: ["Sexual health indication", "Postmenopausal sexual health (research)"],
     commonRisks: ["Nausea", "Transient blood pressure increase"],
     contraindications: ["Uncontrolled hypertension", "Cardiovascular disease caution"],
     sources: [
@@ -207,6 +207,21 @@ window.PEPTIDE_LIBRARY = [
     sources: [
       { label: "PubMed AOD-9604 Search", url: "https://pubmed.ncbi.nlm.nih.gov/?term=AOD-9604" },
       { label: "EMA Medicines", url: "https://www.ema.europa.eu/en/medicines" }
+    ]
+  },
+  {
+    name: "Teriparatide (hPTH 1-34)",
+    category: "PTH analog (anabolic peptide)",
+    status: "Approved (Rx)",
+    evidenceLevel: "High",
+    overview: "Recombinant PTH analog approved for osteoporosis in both postmenopausal women and men at high fracture risk. Unique among osteoporosis therapies: anabolic (bone-building) mechanism; increases bone density and muscle mass with proper load-bearing activity.",
+    useCases: ["Postmenopausal bone health", "Anabolic therapy", "Fracture risk reduction", "Muscle and bone preservation"],
+    commonRisks: ["Injection site bruising", "Orthostatic hypotension (rare)", "Theoretical osteosarcoma risk in rodent studies (no human signal)"],
+    contraindications: ["Prior radiation to skeleton", "Open epiphyses (generally in postmenopausal women this is not relevant)", "Paget's disease caution"],
+    sources: [
+      { label: "FDA Drug Database", url: "https://www.accessdata.fda.gov/scripts/cder/daf/" },
+      { label: "PubMed Teriparatide Search", url: "https://pubmed.ncbi.nlm.nih.gov/?term=teriparatide+postmenopausal" },
+      { label: "NOF Osteoporosis Guidelines", url: "https://www.nof.org/" }
     ]
   }
 ];
