@@ -131,7 +131,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Long-acting GHRH analog frequently marketed online but generally considered investigational outside approved pathways.",
-    useCases: ["Performance/aging research", "Endocrine research"],
+    useCases: ["Performance/aging research", "Endocrine research", "Muscle recovery research"],
     commonRisks: ["Unknown product quality risk", "Hormonal adverse effects under study"],
     contraindications: ["No broad regulatory approval"],
     sources: [
@@ -145,7 +145,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Peptide secretagogue found in research contexts; not broadly approved for general therapeutic use.",
-    useCases: ["Endocrine research", "Performance/aging research"],
+    useCases: ["Endocrine research", "Performance/aging research", "Muscle recovery research"],
     commonRisks: ["Data limitations", "Potential endocrine side effects"],
     contraindications: ["No broad regulatory approval"],
     sources: [
@@ -159,7 +159,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Frequently discussed online; robust human efficacy and long-term safety data remain limited.",
-    useCases: ["Tissue recovery research", "GI research"],
+    useCases: ["Tissue recovery research", "GI research", "Sports injury repair research"],
     commonRisks: ["Unknown purity in non-regulated markets", "Limited high-quality human data"],
     contraindications: ["Not approved as a prescription therapeutic in major markets"],
     sources: [
@@ -173,7 +173,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Studied in preclinical and early research settings; not broadly approved for consumer therapeutic use.",
-    useCases: ["Tissue recovery research", "Inflammation research"],
+    useCases: ["Tissue recovery research", "Inflammation research", "Sports injury repair research"],
     commonRisks: ["Purity/adulteration concerns", "Limited clinical-grade evidence"],
     contraindications: ["No broad regulatory approval"],
     sources: [
@@ -214,8 +214,8 @@ window.PEPTIDE_LIBRARY = [
     category: "PTH analog (anabolic peptide)",
     status: "Approved (Rx)",
     evidenceLevel: "High",
-    overview: "Recombinant PTH analog approved for osteoporosis in both postmenopausal women and men at high fracture risk. Unique among osteoporosis therapies: anabolic (bone-building) mechanism; increases bone density and muscle mass with proper load-bearing activity.",
-    useCases: ["Postmenopausal bone health", "Anabolic therapy", "Fracture risk reduction", "Muscle and bone preservation"],
+    overview: "Recombinant PTH analog approved for osteoporosis in both postmenopausal women and men at high fracture risk. Unique among osteoporosis therapies: anabolic (bone-building) mechanism; increases bone density and muscle mass with proper load-bearing activity. Also studied in orthopedic injury recovery contexts.",
+    useCases: ["Postmenopausal bone health", "Anabolic therapy", "Fracture risk reduction", "Muscle and bone preservation", "Sports injury repair (bone healing)"],
     commonRisks: ["Injection site bruising", "Orthostatic hypotension (rare)", "Theoretical osteosarcoma risk in rodent studies (no human signal)"],
     contraindications: ["Prior radiation to skeleton", "Open epiphyses (generally in postmenopausal women this is not relevant)", "Paget's disease caution"],
     sources: [
