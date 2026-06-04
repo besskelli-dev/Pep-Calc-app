@@ -1,4 +1,4 @@
-const CACHE_NAME = "pep-calc-v6";
+const CACHE_NAME = "pep-calc-v7";
 const ASSETS = [
   "./",
   "./index.html",
@@ -6,6 +6,8 @@ const ASSETS = [
   "./script.js",
   "./calculator.js",
   "./peptide-library-data.js",
+  "./status-tracker.js",
+  "./status-tracker-styles.css",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
@@ -38,6 +40,27 @@ self.addEventListener("activate", function (event) {
 
 self.addEventListener("fetch", function (event) {
   if (event.request.method !== "GET") {
+    return;
+  }
+
+  const isDocumentRequest = event.request.mode === "navigate" ||
+    (event.request.destination === "document") ||
+    event.request.url.endsWith(".html");
+
+  if (isDocumentRequest) {
+    event.respondWith(
+      fetch(event.request).then(function (response) {
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(function (cache) {
+          cache.put(event.request, responseClone);
+        });
+        return response;
+      }).catch(function () {
+        return caches.match(event.request).then(function (cached) {
+          return cached || caches.match("./index.html");
+        });
+      })
+    );
     return;
   }
 
