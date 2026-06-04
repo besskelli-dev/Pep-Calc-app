@@ -92,6 +92,43 @@
       <div id="customPresetList" class="custom-preset-list"></div>
     </section>
 
+    <section class="presets" aria-label="Reminder planner">
+      <h2>Reminder Planner</h2>
+      <div class="reminder-form">
+        <label>
+          <span class="label-text">Reminder type</span>
+          <select id="reminderType">
+            <option value="Vial Reconstitution">Vial reconstitution date</option>
+            <option value="Vial Review">Vial review/check date</option>
+            <option value="Supply Check">Sterile supply check</option>
+            <option value="Clinician Follow-Up">Clinician follow-up reminder</option>
+            <option value="Custom">Custom reminder</option>
+          </select>
+        </label>
+        <label>
+          <span class="label-text">Reminder title</span>
+          <div class="input-row">
+            <input id="reminderTitle" type="text" placeholder="e.g. Review vial storage" aria-label="Reminder title">
+          </div>
+        </label>
+        <label>
+          <span class="label-text">Date &amp; time</span>
+          <div class="input-row">
+            <input id="reminderWhen" type="datetime-local" aria-label="Reminder date and time">
+          </div>
+        </label>
+        <label>
+          <span class="label-text">Notes (optional)</span>
+          <div class="input-row">
+            <input id="reminderNotes" type="text" placeholder="e.g. Confirm with pharmacist" aria-label="Reminder notes">
+          </div>
+        </label>
+        <button id="saveReminderBtn" type="button" class="preset-btn">Save Reminder</button>
+      </div>
+      <p class="hint">Educational planner only. Follow your licensed clinician's instructions for any treatment plan.</p>
+      <div id="reminderList" class="custom-preset-list"></div>
+    </section>
+
     <section class="output-mode" aria-label="Result display mode">
       <h2>Output Display</h2>
       <div class="mode-grid" id="outputMode">

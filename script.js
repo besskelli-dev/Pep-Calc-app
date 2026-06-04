@@ -24,6 +24,12 @@ const presetNameInput = document.getElementById("presetName");
 const customPresetList = document.getElementById("customPresetList");
 const copySummaryBtn = document.getElementById("copySummaryBtn");
 const copyStatus = document.getElementById("copyStatus");
+const reminderType = document.getElementById("reminderType");
+const reminderTitle = document.getElementById("reminderTitle");
+const reminderWhen = document.getElementById("reminderWhen");
+const reminderNotes = document.getElementById("reminderNotes");
+const saveReminderBtn = document.getElementById("saveReminderBtn");
+const reminderList = document.getElementById("reminderList");
 
 const peptideInput = document.getElementById("peptideMg");
 const waterInput = document.getElementById("waterMl");
@@ -39,7 +45,9 @@ let doseUnit = "mg";
 let deferredInstallPrompt = null;
 const peptideLibraryData = Array.isArray(window.PEPTIDE_LIBRARY) ? window.PEPTIDE_LIBRARY : [];
 const PRESET_STORAGE_KEY = "blue-winged-custom-presets";
+const REMINDER_STORAGE_KEY = "blue-winged-reminders";
 let customPresets = [];
+let reminders = [];
 let latestSummaryText = "";
 
 doseToggle.querySelectorAll(".toggle-btn").forEach(function (btn) {
@@ -146,11 +154,14 @@ libraryViewBtn.addEventListener("click", function () {
 saveCurrentPresetBtn.addEventListener("click", saveCurrentPreset);
 customPresetList.addEventListener("click", handleCustomPresetActions);
 copySummaryBtn.addEventListener("click", copySummary);
+saveReminderBtn.addEventListener("click", saveReminder);
+reminderList.addEventListener("click", handleReminderActions);
 
 updateConfidenceState();
 refreshDoseUnitUI();
 initializeLibrary();
 initializeCustomPresets();
+initializeReminders();
 
 function setDoseUnit(unit, convertExistingValue) {
   const nextUnit = unit === "mg" ? "mg" : "mcg";
@@ -740,4 +751,195 @@ function escapeHtml(text) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function initializeReminders() {
+  try {
+    const raw = localStorage.getItem(REMINDER_STORAGE_KEY);
+    reminders = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(reminders)) {
+      reminders = [];
+    }
+  } catch (error) {
+    reminders = [];
+  }
+
+  renderReminders();
+}
+
+function persistReminders() {
+  localStorage.setItem(REMINDER_STORAGE_KEY, JSON.stringify(reminders));
+}
+
+function saveReminder() {
+  const whenValue = reminderWhen.value;
+  const typeValue = reminderType.value;
+  const titleValue = reminderTitle.value.trim() || typeValue;
+  const notesValue = reminderNotes.value.trim();
+
+  if (!whenValue) {
+    copyStatus.textContent = "Choose a reminder date and time before saving.";
+    copyStatus.classList.remove("hidden");
+    return;
+  }
+
+  reminders.unshift({
+    id: String(Date.now()),
+    type: typeValue,
+    title: titleValue,
+    when: whenValue,
+    notes: notesValue,
+    done: false
+  });
+
+  persistReminders();
+  renderReminders();
+
+  reminderTitle.value = "";
+  reminderNotes.value = "";
+
+  copyStatus.textContent = "Reminder saved.";
+  copyStatus.classList.remove("hidden");
+}
+
+function renderReminders() {
+  reminderList.innerHTML = "";
+
+  if (!reminders.length) {
+    const empty = document.createElement("p");
+    empty.className = "hint";
+    empty.textContent = "No reminders yet.";
+    reminderList.appendChild(empty);
+    return;
+  }
+
+  reminders
+    .slice()
+    .sort(function (a, b) {
+      return new Date(a.when).getTime() - new Date(b.when).getTime();
+    })
+    .forEach(function (reminder) {
+      const item = document.createElement("div");
+      item.className = "custom-preset-item" + (reminder.done ? " done" : "");
+
+      const info = document.createElement("div");
+      const whenDisplay = formatReminderDate(reminder.when);
+      info.innerHTML =
+        '<strong class="title">' + escapeHtml(reminder.title) + '</strong>' +
+        '<div class="meta">' + escapeHtml(reminder.type) + " - " + escapeHtml(whenDisplay) + "</div>" +
+        (reminder.notes ? '<div class="meta">Notes: ' + escapeHtml(reminder.notes) + "</div>" : "");
+
+      const actions = document.createElement("div");
+      actions.className = "custom-preset-actions";
+      actions.innerHTML =
+        '<button class="mini-btn" data-reminder-action="toggle" data-id="' + reminder.id + '">' +
+          (reminder.done ? "Mark Open" : "Mark Done") +
+        "</button>" +
+        '<button class="mini-btn" data-reminder-action="ics" data-id="' + reminder.id + '">Add to Calendar</button>' +
+        '<button class="mini-btn" data-reminder-action="delete" data-id="' + reminder.id + '">Delete</button>';
+
+      item.appendChild(info);
+      item.appendChild(actions);
+      reminderList.appendChild(item);
+    });
+}
+
+function handleReminderActions(event) {
+  const button = event.target.closest("button[data-reminder-action]");
+  if (!button) {
+    return;
+  }
+
+  const reminderId = button.getAttribute("data-id");
+  const action = button.getAttribute("data-reminder-action");
+  const reminder = reminders.find(function (entry) {
+    return entry.id === reminderId;
+  });
+
+  if (!reminder) {
+    return;
+  }
+
+  if (action === "toggle") {
+    reminder.done = !reminder.done;
+    persistReminders();
+    renderReminders();
+    return;
+  }
+
+  if (action === "delete") {
+    reminders = reminders.filter(function (entry) {
+      return entry.id !== reminderId;
+    });
+    persistReminders();
+    renderReminders();
+    return;
+  }
+
+  if (action === "ics") {
+    downloadReminderICS(reminder);
+  }
+}
+
+function downloadReminderICS(reminder) {
+  const startDate = new Date(reminder.when);
+  const endDate = new Date(startDate.getTime() + (30 * 60 * 1000));
+
+  const ics = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Blue Winged Solutions//Peptide Reminder Planner//EN",
+    "BEGIN:VEVENT",
+    "UID:" + reminder.id + "@bluewingedsolutions",
+    "DTSTAMP:" + toICSDate(new Date()),
+    "DTSTART:" + toICSDate(startDate),
+    "DTEND:" + toICSDate(endDate),
+    "SUMMARY:" + sanitizeICS(reminder.title),
+    "DESCRIPTION:" + sanitizeICS((reminder.type + (reminder.notes ? " - " + reminder.notes : ""))),
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+
+  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = reminder.title.replace(/[^a-z0-9]+/gi, "-").toLowerCase() + ".ics";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+function toICSDate(date) {
+  const pad = function (value) {
+    return String(value).padStart(2, "0");
+  };
+
+  return (
+    date.getUTCFullYear() +
+    pad(date.getUTCMonth() + 1) +
+    pad(date.getUTCDate()) +
+    "T" +
+    pad(date.getUTCHours()) +
+    pad(date.getUTCMinutes()) +
+    pad(date.getUTCSeconds()) +
+    "Z"
+  );
+}
+
+function sanitizeICS(text) {
+  return String(text)
+    .replace(/\n/g, "\\n")
+    .replace(/,/g, "\\,")
+    .replace(/;/g, "\\;");
+}
+
+function formatReminderDate(dateValue) {
+  const date = new Date(dateValue);
+  if (isNaN(date.getTime())) {
+    return dateValue;
+  }
+
+  return date.toLocaleString();
 }

@@ -252,6 +252,22 @@ input:focus { outline: none; }
   gap: 8px;
 }
 
+.reminder-form {
+  display: grid;
+  gap: 10px;
+}
+
+.reminder-form select {
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--field);
+  color: var(--text);
+  font-family: inherit;
+}
+
 .custom-preset-list {
   margin-top: 10px;
   display: grid;
@@ -267,6 +283,14 @@ input:focus { outline: none; }
   border-radius: 8px;
   padding: 8px;
   background: rgba(255, 255, 255, 0.04);
+}
+
+.custom-preset-item.done {
+  opacity: 0.7;
+}
+
+.custom-preset-item .title {
+  display: block;
 }
 
 .custom-preset-item .meta {
