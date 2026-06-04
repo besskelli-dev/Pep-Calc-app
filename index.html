@@ -9,6 +9,7 @@
   <link rel="icon" href="Logo/butterfly-logo.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="Logo/butterfly-logo.png">
   <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="status-tracker-styles.css">
 </head>
 <body>
   <main class="card">
@@ -28,6 +29,31 @@
       <button id="calcViewBtn" type="button" class="view-btn active" aria-pressed="true">Calculator</button>
       <button id="libraryViewBtn" type="button" class="view-btn" aria-pressed="false">Safety Library</button>
     </section>
+    
+      <div id="statusUpdateBanner" class="status-update-banner hidden" role="alert" aria-live="polite">
+        <div class="banner-content">
+          <h3>📋 Library Update</h3>
+          <p id="statusUpdateMessage"></p>
+          <div class="banner-actions">
+            <button id="dismissBannerBtn" type="button" class="ghost-btn">Dismiss</button>
+            <button id="emailAlertBtn" type="button" class="ghost-btn primary">Get Email Alerts</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="emailAlertModal" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+          <button type="button" class="modal-close" aria-label="Close">&times;</button>
+          <h3>Get Peptide Status Updates</h3>
+          <p>Enter your email to receive alerts when peptides change status.</p>
+          <form id="emailAlertForm">
+            <input type="email" placeholder="your@email.com" required aria-label="Email address">
+            <button type="submit" class="preset-btn">Subscribe</button>
+          </form>
+          <p class="hint" style="font-size: 0.9em; margin-top: 1rem;">We'll only email you when library status changes are detected.</p>
+        </div>
+      </div>
 
     <section id="calculatorView">
 
@@ -274,6 +300,7 @@
 
   <script src="calculator.js"></script>
   <script src="peptide-library-data.js"></script>
+   <script src="status-tracker.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
