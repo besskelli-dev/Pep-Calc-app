@@ -5,6 +5,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "High",
     overview: "GLP-1 receptor agonist studied and approved for glycemic control and chronic weight management in specific indications.",
+    useCases: ["Glycemic management", "Weight management", "Cardiometabolic risk context"],
     commonRisks: ["Nausea", "Vomiting", "Constipation"],
     contraindications: ["Personal/family history of medullary thyroid carcinoma", "MEN2"],
     sources: [
@@ -18,6 +19,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "High",
     overview: "GLP-1 receptor agonist with approved uses in diabetes and chronic weight management in defined populations.",
+    useCases: ["Glycemic management", "Weight management"],
     commonRisks: ["GI side effects", "Injection site reactions"],
     contraindications: ["MTC/MEN2 history", "Hypersensitivity"],
     sources: [
@@ -31,6 +33,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "High",
     overview: "Weekly GLP-1 receptor agonist approved for type 2 diabetes management and cardiometabolic risk reduction contexts.",
+    useCases: ["Glycemic management", "Cardiometabolic risk context"],
     commonRisks: ["Nausea", "Diarrhea"],
     contraindications: ["MTC/MEN2 history"],
     sources: [
@@ -44,6 +47,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "High",
     overview: "Dual incretin agonist (GIP and GLP-1 pathways) approved for specific glycemic and weight-related indications.",
+    useCases: ["Glycemic management", "Weight management"],
     commonRisks: ["Nausea", "Vomiting", "Diarrhea"],
     contraindications: ["MTC/MEN2 history", "Severe GI disease caution"],
     sources: [
@@ -57,6 +61,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Investigational",
     evidenceLevel: "Early",
     overview: "Investigational multi-agonist studied for metabolic indications; currently not broadly approved.",
+    useCases: ["Metabolic research", "Weight management research"],
     commonRisks: ["GI side effects in trials", "Heart rate changes under study"],
     contraindications: ["Not established outside trials"],
     sources: [
@@ -70,6 +75,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "High",
     overview: "GLP-2 analog approved for short bowel syndrome support in specific patient populations.",
+    useCases: ["Short bowel syndrome support", "Nutritional absorption support"],
     commonRisks: ["Abdominal pain", "Fluid overload risk in susceptible patients"],
     contraindications: ["Active GI malignancy caution"],
     sources: [
@@ -83,6 +89,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "Moderate",
     overview: "Synthetic growth-hormone releasing factor analog approved for defined HIV-associated lipodystrophy use.",
+    useCases: ["HIV-associated lipodystrophy context", "Endocrine pathway modulation"],
     commonRisks: ["Arthralgia", "Injection site reactions"],
     contraindications: ["Active malignancy", "Pregnancy"],
     sources: [
@@ -96,6 +103,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "Moderate",
     overview: "Melanocortin agonist approved in specific sexual health indications for premenopausal women.",
+    useCases: ["Sexual health indication"],
     commonRisks: ["Nausea", "Transient blood pressure increase"],
     contraindications: ["Uncontrolled hypertension", "Cardiovascular disease caution"],
     sources: [
@@ -109,6 +117,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Approved (Rx)",
     evidenceLevel: "High",
     overview: "Endogenous peptide hormone with approved obstetric indications; off-label use requires clinical oversight.",
+    useCases: ["Obstetric indication", "Labor management context"],
     commonRisks: ["Uterine hyperstimulation risk in obstetric use", "Water intoxication with prolonged dosing"],
     contraindications: ["Use depends on obstetric context"],
     sources: [
@@ -122,6 +131,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Long-acting GHRH analog frequently marketed online but generally considered investigational outside approved pathways.",
+    useCases: ["Performance/aging research", "Endocrine research"],
     commonRisks: ["Unknown product quality risk", "Hormonal adverse effects under study"],
     contraindications: ["No broad regulatory approval"],
     sources: [
@@ -135,6 +145,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Peptide secretagogue found in research contexts; not broadly approved for general therapeutic use.",
+    useCases: ["Endocrine research", "Performance/aging research"],
     commonRisks: ["Data limitations", "Potential endocrine side effects"],
     contraindications: ["No broad regulatory approval"],
     sources: [
@@ -148,6 +159,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Frequently discussed online; robust human efficacy and long-term safety data remain limited.",
+    useCases: ["Tissue recovery research", "GI research"],
     commonRisks: ["Unknown purity in non-regulated markets", "Limited high-quality human data"],
     contraindications: ["Not approved as a prescription therapeutic in major markets"],
     sources: [
@@ -161,6 +173,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "Studied in preclinical and early research settings; not broadly approved for consumer therapeutic use.",
+    useCases: ["Tissue recovery research", "Inflammation research"],
     commonRisks: ["Purity/adulteration concerns", "Limited clinical-grade evidence"],
     contraindications: ["No broad regulatory approval"],
     sources: [
@@ -174,6 +187,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Limited / compounding context",
     evidenceLevel: "Early",
     overview: "Synthetic GHRH fragment with historical approved use; current availability often occurs via compounding pathways.",
+    useCases: ["Endocrine pathway modulation", "Performance/aging context"],
     commonRisks: ["Variable product quality", "Injection site reactions"],
     contraindications: ["Requires licensed prescriber oversight"],
     sources: [
@@ -187,6 +201,7 @@ window.PEPTIDE_LIBRARY = [
     status: "Research / investigational",
     evidenceLevel: "Early",
     overview: "hGH fragment explored in metabolic research contexts; regulatory approval is limited by region and indication.",
+    useCases: ["Metabolic research", "Weight management research"],
     commonRisks: ["Limited large-scale clinical evidence", "Quality variability in non-regulated products"],
     contraindications: ["No broad global approval"],
     sources: [

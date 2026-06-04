@@ -17,6 +17,7 @@ const libraryView = document.getElementById("libraryView");
 const librarySearch = document.getElementById("librarySearch");
 const statusFilter = document.getElementById("statusFilter");
 const categoryFilter = document.getElementById("categoryFilter");
+const useCaseFilter = document.getElementById("useCaseFilter");
 const libraryCards = document.getElementById("libraryCards");
 const libraryCount = document.getElementById("libraryCount");
 const saveCurrentPresetBtn = document.getElementById("saveCurrentPresetBtn");
@@ -148,7 +149,7 @@ libraryViewBtn.addEventListener("click", function () {
   switchView("library");
 });
 
-[librarySearch, statusFilter, categoryFilter].forEach(function (control) {
+[librarySearch, statusFilter, categoryFilter, useCaseFilter].forEach(function (control) {
   control.addEventListener("input", renderLibrary);
   control.addEventListener("change", renderLibrary);
 });
@@ -467,6 +468,10 @@ function populateLibraryFilters() {
     return item.category;
   }));
 
+  const useCases = uniqueValues(peptideLibraryData.flatMap(function (item) {
+    return Array.isArray(item.useCases) ? item.useCases : [];
+  }));
+
   statuses.forEach(function (status) {
     const option = document.createElement("option");
     option.value = status;
@@ -480,6 +485,13 @@ function populateLibraryFilters() {
     option.textContent = category;
     categoryFilter.appendChild(option);
   });
+
+  useCases.forEach(function (useCase) {
+    const option = document.createElement("option");
+    option.value = useCase;
+    option.textContent = useCase;
+    useCaseFilter.appendChild(option);
+  });
 }
 
 function uniqueValues(values) {
@@ -490,21 +502,25 @@ function renderLibrary() {
   const query = librarySearch.value.trim().toLowerCase();
   const selectedStatus = statusFilter.value;
   const selectedCategory = categoryFilter.value;
+  const selectedUseCase = useCaseFilter.value;
 
   const filtered = peptideLibraryData.filter(function (item) {
     const inStatus = selectedStatus === "all" || item.status === selectedStatus;
     const inCategory = selectedCategory === "all" || item.category === selectedCategory;
+    const itemUseCases = Array.isArray(item.useCases) ? item.useCases : [];
+    const inUseCase = selectedUseCase === "all" || itemUseCases.indexOf(selectedUseCase) !== -1;
     const searchableText = [
       item.name,
       item.category,
       item.status,
       item.overview,
       item.evidenceLevel,
+      itemUseCases.join(" "),
       item.commonRisks.join(" "),
       item.contraindications.join(" ")
     ].join(" ").toLowerCase();
     const inSearch = !query || searchableText.indexOf(query) !== -1;
-    return inStatus && inCategory && inSearch;
+    return inStatus && inCategory && inUseCase && inSearch;
   });
 
   libraryCount.textContent = "Showing " + filtered.length + " of " + peptideLibraryData.length + " entries.";
@@ -553,6 +569,8 @@ function buildLibraryCard(item) {
   overview.className = "library-overview";
   overview.textContent = item.overview;
 
+  const useCases = buildLibraryList("Potentially studied for", Array.isArray(item.useCases) ? item.useCases : []);
+
   const risks = buildLibraryList("Common risks", item.commonRisks);
   const contraindications = buildLibraryList("Contraindications / cautions", item.contraindications);
 
@@ -576,6 +594,7 @@ function buildLibraryCard(item) {
   card.appendChild(title);
   card.appendChild(meta);
   card.appendChild(overview);
+  card.appendChild(useCases);
   card.appendChild(risks);
   card.appendChild(contraindications);
   card.appendChild(sourcesTitle);

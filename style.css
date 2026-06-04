@@ -696,7 +696,7 @@ input:focus { outline: none; }
 
 .library-filters {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 8px;
 }
 
@@ -830,6 +830,10 @@ input:focus { outline: none; }
   }
 
   .preset-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .library-filters {
     grid-template-columns: 1fr;
   }
 
