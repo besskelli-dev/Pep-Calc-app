@@ -77,6 +77,17 @@ h1 {
   font-style: italic;
 }
 
+.version-badge {
+  margin-top: 8px;
+  display: inline-block;
+  font-size: 0.76rem;
+  color: #07213f;
+  background: linear-gradient(145deg, var(--accent), var(--accent-soft));
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-weight: 700;
+}
+
 .view-switch {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -234,6 +245,52 @@ input:focus { outline: none; }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
+}
+
+.custom-preset-form {
+  display: grid;
+  gap: 8px;
+}
+
+.custom-preset-list {
+  margin-top: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.custom-preset-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.custom-preset-item .meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.custom-preset-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.mini-btn {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  background: var(--field);
+  color: var(--text);
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.mini-btn:hover {
+  border-color: var(--accent);
 }
 
 .preset-btn {

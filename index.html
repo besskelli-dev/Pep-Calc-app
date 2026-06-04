@@ -19,6 +19,7 @@
           <p class="brand-name">Blue Winged Solutions</p>
           <h1>Reconstitution Calculator</h1>
           <p class="subtitle">Work out peptide dose math safely, step by step.</p>
+          <p id="appVersionBadge" class="version-badge">v1.4.0 • Updated Jun 2026</p>
         </div>
       </div>
     </header>
@@ -79,6 +80,18 @@
       </div>
     </section>
 
+    <section class="presets" aria-label="Saved presets">
+      <h2>Saved Presets (This Device)</h2>
+      <div class="custom-preset-form">
+        <div class="input-row">
+          <input id="presetName" type="text" placeholder="Preset name (e.g. Morning blend)" aria-label="Preset name">
+        </div>
+        <button id="saveCurrentPresetBtn" type="button" class="preset-btn">Save Current Inputs</button>
+      </div>
+      <p class="hint">No account needed. Saved only on this device/browser.</p>
+      <div id="customPresetList" class="custom-preset-list"></div>
+    </section>
+
     <section class="output-mode" aria-label="Result display mode">
       <h2>Output Display</h2>
       <div class="mode-grid" id="outputMode">
@@ -129,8 +142,10 @@
 
     <div class="result-actions">
       <button id="installBtn" type="button" class="ghost-btn hidden">Install App</button>
+      <button id="copySummaryBtn" type="button" class="ghost-btn">Copy Summary</button>
       <button id="printBtn" type="button" class="ghost-btn">Print Summary</button>
     </div>
+    <p id="copyStatus" class="hint hidden" aria-live="polite"></p>
 
     </section>
 

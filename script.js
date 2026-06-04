@@ -19,6 +19,11 @@ const statusFilter = document.getElementById("statusFilter");
 const categoryFilter = document.getElementById("categoryFilter");
 const libraryCards = document.getElementById("libraryCards");
 const libraryCount = document.getElementById("libraryCount");
+const saveCurrentPresetBtn = document.getElementById("saveCurrentPresetBtn");
+const presetNameInput = document.getElementById("presetName");
+const customPresetList = document.getElementById("customPresetList");
+const copySummaryBtn = document.getElementById("copySummaryBtn");
+const copyStatus = document.getElementById("copyStatus");
 
 const peptideInput = document.getElementById("peptideMg");
 const waterInput = document.getElementById("waterMl");
@@ -33,6 +38,9 @@ const fieldErrors = {
 let doseUnit = "mg";
 let deferredInstallPrompt = null;
 const peptideLibraryData = Array.isArray(window.PEPTIDE_LIBRARY) ? window.PEPTIDE_LIBRARY : [];
+const PRESET_STORAGE_KEY = "blue-winged-custom-presets";
+let customPresets = [];
+let latestSummaryText = "";
 
 doseToggle.querySelectorAll(".toggle-btn").forEach(function (btn) {
   btn.addEventListener("click", function () {
@@ -135,9 +143,14 @@ libraryViewBtn.addEventListener("click", function () {
   control.addEventListener("change", renderLibrary);
 });
 
+saveCurrentPresetBtn.addEventListener("click", saveCurrentPreset);
+customPresetList.addEventListener("click", handleCustomPresetActions);
+copySummaryBtn.addEventListener("click", copySummary);
+
 updateConfidenceState();
 refreshDoseUnitUI();
 initializeLibrary();
+initializeCustomPresets();
 
 function setDoseUnit(unit, convertExistingValue) {
   const nextUnit = unit === "mg" ? "mg" : "mcg";
@@ -298,6 +311,16 @@ function showResult(values, result) {
     "</div>" +
     '<div class="timestamp">Calculated: ' + timestamp + "</div>";
 
+  latestSummaryText =
+    "Blue Winged Solutions - Reconstitution Summary\n" +
+    "Calculated: " + timestamp + "\n" +
+    "Peptide: " + values.peptideMg + " mg\n" +
+    "Bacteriostatic water: " + values.waterMl + " mL\n" +
+    "Dose: " + values.doseValue + " " + values.doseUnit + "\n" +
+    "Draw: " + PeptideCalc.round(result.units, 1) + " units (" + PeptideCalc.round(result.volumeMl, 3) + " mL)\n" +
+    "Concentration: " + PeptideCalc.round(result.concentrationMgPerMl, 3) + " mg/mL\n" +
+    "Dose count: exact " + PeptideCalc.round(dosesPerVialExact, 2) + ", practical " + practicalSummary;
+
   scrollToResult();
 }
 
@@ -310,6 +333,7 @@ function showError(message) {
 function resetResult() {
   resultBox.className = "result hidden";
   resultBox.innerHTML = "";
+  latestSummaryText = "";
 }
 
 function buildSyringeVisual(units) {
@@ -558,4 +582,162 @@ function statusClass(statusText) {
   }
 
   return "limited";
+}
+
+function initializeCustomPresets() {
+  try {
+    const raw = localStorage.getItem(PRESET_STORAGE_KEY);
+    customPresets = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(customPresets)) {
+      customPresets = [];
+    }
+  } catch (error) {
+    customPresets = [];
+  }
+
+  renderCustomPresets();
+}
+
+function persistCustomPresets() {
+  localStorage.setItem(PRESET_STORAGE_KEY, JSON.stringify(customPresets));
+}
+
+function saveCurrentPreset() {
+  const peptideMg = parseFloat(peptideInput.value);
+  const waterMl = parseFloat(waterInput.value);
+  const doseValue = parseFloat(doseInput.value);
+
+  if (!Number.isFinite(peptideMg) || !Number.isFinite(waterMl) || !Number.isFinite(doseValue)) {
+    copyStatus.textContent = "Enter peptide, water, and dose values before saving a preset.";
+    copyStatus.classList.remove("hidden");
+    return;
+  }
+
+  const name = presetNameInput.value.trim() || ("Preset " + (customPresets.length + 1));
+  customPresets.unshift({
+    id: String(Date.now()),
+    name: name,
+    peptideMg: peptideMg,
+    waterMl: waterMl,
+    doseValue: doseValue,
+    doseUnit: doseUnit
+  });
+
+  persistCustomPresets();
+  renderCustomPresets();
+  presetNameInput.value = "";
+  copyStatus.textContent = "Preset saved on this device.";
+  copyStatus.classList.remove("hidden");
+}
+
+function renderCustomPresets() {
+  customPresetList.innerHTML = "";
+
+  if (!customPresets.length) {
+    const empty = document.createElement("p");
+    empty.className = "hint";
+    empty.textContent = "No saved presets yet.";
+    customPresetList.appendChild(empty);
+    return;
+  }
+
+  customPresets.forEach(function (preset) {
+    const item = document.createElement("div");
+    item.className = "custom-preset-item";
+
+    const info = document.createElement("div");
+    info.innerHTML =
+      '<strong>' + escapeHtml(preset.name) + '</strong>' +
+      '<div class="meta">' +
+      preset.peptideMg + ' mg, ' +
+      preset.waterMl + ' mL, ' +
+      preset.doseValue + ' ' + preset.doseUnit +
+      '</div>';
+
+    const actions = document.createElement("div");
+    actions.className = "custom-preset-actions";
+    actions.innerHTML =
+      '<button class="mini-btn" data-action="load" data-id="' + preset.id + '">Load</button>' +
+      '<button class="mini-btn" data-action="rename" data-id="' + preset.id + '">Rename</button>' +
+      '<button class="mini-btn" data-action="delete" data-id="' + preset.id + '">Delete</button>';
+
+    item.appendChild(info);
+    item.appendChild(actions);
+    customPresetList.appendChild(item);
+  });
+}
+
+function handleCustomPresetActions(event) {
+  const button = event.target.closest("button[data-action]");
+  if (!button) {
+    return;
+  }
+
+  const presetId = button.getAttribute("data-id");
+  const action = button.getAttribute("data-action");
+  const preset = customPresets.find(function (entry) {
+    return entry.id === presetId;
+  });
+
+  if (!preset) {
+    return;
+  }
+
+  if (action === "load") {
+    peptideInput.value = preset.peptideMg;
+    waterInput.value = preset.waterMl;
+    doseInput.value = preset.doseValue;
+    setDoseUnit(preset.doseUnit, false);
+    clearValidationUI();
+    resetResult();
+    copyStatus.textContent = "Preset loaded.";
+    copyStatus.classList.remove("hidden");
+    return;
+  }
+
+  if (action === "rename") {
+    const nextName = window.prompt("Rename preset:", preset.name);
+    if (!nextName) {
+      return;
+    }
+
+    preset.name = nextName.trim() || preset.name;
+    persistCustomPresets();
+    renderCustomPresets();
+    return;
+  }
+
+  if (action === "delete") {
+    customPresets = customPresets.filter(function (entry) {
+      return entry.id !== presetId;
+    });
+    persistCustomPresets();
+    renderCustomPresets();
+  }
+}
+
+async function copySummary() {
+  if (!latestSummaryText) {
+    copyStatus.textContent = "Calculate first, then copy the summary.";
+    copyStatus.classList.remove("hidden");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(latestSummaryText);
+    copyStatus.textContent = "Summary copied to clipboard.";
+    copyStatus.classList.remove("hidden");
+  } catch (error) {
+    copyStatus.textContent = "Clipboard blocked. Try again or copy from the result panel.";
+    copyStatus.classList.remove("hidden");
+  }
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
