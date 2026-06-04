@@ -1,11 +1,11 @@
 {
-  "name": "Peptide Reconstitution Safety Calculator",
-  "short_name": "Pep Calc",
-  "description": "Safety-first peptide reconstitution and syringe unit calculator.",
+  "name": "Blue Winged Solutions - Peptide Reconstitution Safety Calculator",
+  "short_name": "Blue Winged",
+  "description": "Blue Winged Solutions safety-first peptide reconstitution and syringe unit calculator.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#1a2420",
-  "theme_color": "#1a2420",
+  "background_color": "#061737",
+  "theme_color": "#0a2754",
   "orientation": "portrait-primary",
   "icons": [
     {

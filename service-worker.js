@@ -1,4 +1,4 @@
-const CACHE_NAME = "pep-calc-v2";
+const CACHE_NAME = "pep-calc-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -8,7 +8,8 @@ const ASSETS = [
   "./peptide-library-data.js",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
-  "./icons/icon-512.png"
+  "./icons/icon-512.png",
+  "./Logo/butterfly-logo.png"
 ];
 
 self.addEventListener("install", function (event) {
