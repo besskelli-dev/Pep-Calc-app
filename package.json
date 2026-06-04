@@ -4,6 +4,7 @@
   "private": true,
   "description": "Peptide reconstitution safety calculator",
   "scripts": {
+    "build": "echo \"Static site build complete\"",
     "start": "node server.js",
     "test": "node --test"
   }
