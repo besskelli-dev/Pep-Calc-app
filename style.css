@@ -241,6 +241,35 @@ input:focus { outline: none; }
   margin-bottom: 10px;
 }
 
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.section-toggle {
+  width: auto;
+  margin-top: 0;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--field);
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+}
+
+.section-body {
+  margin-top: 8px;
+}
+
+.collapsible-card.is-collapsed .section-body {
+  display: none;
+}
+
 .preset-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -603,6 +632,19 @@ input:focus { outline: none; }
   justify-content: flex-end;
 }
 
+.print-clean-toggle {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.print-clean-toggle input {
+  accent-color: var(--accent);
+}
+
 .research-links {
   margin-top: 20px;
   padding: 14px;
@@ -794,6 +836,10 @@ input:focus { outline: none; }
   .result .big {
     font-size: 1.7rem;
   }
+
+  .collapsible-card.mobile-collapsed .section-body {
+    display: none;
+  }
 }
 
 @media print {
@@ -830,6 +876,27 @@ input:focus { outline: none; }
     border: 1px solid #999;
     color: #000;
     background: #fff;
+  }
+
+  body.print-clean .result {
+    border-color: #555;
+    padding: 16px;
+  }
+
+  body.print-clean .result .headline {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+
+  body.print-clean .result .big {
+    font-size: 2.3rem;
+    margin-bottom: 8px;
+  }
+
+  body.print-clean .result .work,
+  body.print-clean .result .dose-count,
+  body.print-clean .result .timestamp {
+    display: none;
   }
 
   .syringe-visual {

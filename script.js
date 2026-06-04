@@ -30,6 +30,7 @@ const reminderWhen = document.getElementById("reminderWhen");
 const reminderNotes = document.getElementById("reminderNotes");
 const saveReminderBtn = document.getElementById("saveReminderBtn");
 const reminderList = document.getElementById("reminderList");
+const cleanPrintToggle = document.getElementById("cleanPrintToggle");
 
 const peptideInput = document.getElementById("peptideMg");
 const waterInput = document.getElementById("waterMl");
@@ -46,6 +47,7 @@ let deferredInstallPrompt = null;
 const peptideLibraryData = Array.isArray(window.PEPTIDE_LIBRARY) ? window.PEPTIDE_LIBRARY : [];
 const PRESET_STORAGE_KEY = "blue-winged-custom-presets";
 const REMINDER_STORAGE_KEY = "blue-winged-reminders";
+const PRINT_MODE_STORAGE_KEY = "blue-winged-print-clean";
 let customPresets = [];
 let reminders = [];
 let latestSummaryText = "";
@@ -156,12 +158,32 @@ customPresetList.addEventListener("click", handleCustomPresetActions);
 copySummaryBtn.addEventListener("click", copySummary);
 saveReminderBtn.addEventListener("click", saveReminder);
 reminderList.addEventListener("click", handleReminderActions);
+document.querySelectorAll(".section-toggle").forEach(function (button) {
+  button.addEventListener("click", function () {
+    const card = button.closest("[data-collapsible]");
+    if (!card) {
+      return;
+    }
+
+    const collapsed = card.classList.toggle("is-collapsed");
+    button.setAttribute("aria-expanded", String(!collapsed));
+    button.textContent = collapsed ? "Show" : "Hide";
+  });
+});
+
+cleanPrintToggle.addEventListener("change", function () {
+  const enabled = cleanPrintToggle.checked;
+  document.body.classList.toggle("print-clean", enabled);
+  localStorage.setItem(PRINT_MODE_STORAGE_KEY, enabled ? "1" : "0");
+});
 
 updateConfidenceState();
 refreshDoseUnitUI();
 initializeLibrary();
 initializeCustomPresets();
 initializeReminders();
+initializePrintMode();
+initializeMobileCompactMode();
 
 function setDoseUnit(unit, convertExistingValue) {
   const nextUnit = unit === "mg" ? "mg" : "mcg";
@@ -942,4 +964,26 @@ function formatReminderDate(dateValue) {
   }
 
   return date.toLocaleString();
+}
+
+function initializePrintMode() {
+  const enabled = localStorage.getItem(PRINT_MODE_STORAGE_KEY) === "1";
+  cleanPrintToggle.checked = enabled;
+  document.body.classList.toggle("print-clean", enabled);
+}
+
+function initializeMobileCompactMode() {
+  if (!window.matchMedia("(max-width: 600px)").matches) {
+    return;
+  }
+
+  document.querySelectorAll("[data-collapsible]").forEach(function (card) {
+    card.classList.add("mobile-collapsed");
+    card.classList.add("is-collapsed");
+    const button = card.querySelector(".section-toggle");
+    if (button) {
+      button.setAttribute("aria-expanded", "false");
+      button.textContent = "Show";
+    }
+  });
 }

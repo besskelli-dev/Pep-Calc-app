@@ -1,4 +1,4 @@
-const CACHE_NAME = "pep-calc-v4";
+const CACHE_NAME = "pep-calc-v5";
 const ASSETS = [
   "./",
   "./index.html",

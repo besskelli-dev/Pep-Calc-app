@@ -80,8 +80,12 @@
       </div>
     </section>
 
-    <section class="presets" aria-label="Saved presets">
-      <h2>Saved Presets (This Device)</h2>
+    <section class="presets collapsible-card" aria-label="Saved presets" data-collapsible>
+      <div class="section-head">
+        <h2>Saved Presets (This Device)</h2>
+        <button type="button" class="section-toggle" aria-expanded="true">Hide</button>
+      </div>
+      <div class="section-body">
       <div class="custom-preset-form">
         <div class="input-row">
           <input id="presetName" type="text" placeholder="Preset name (e.g. Morning blend)" aria-label="Preset name">
@@ -90,10 +94,15 @@
       </div>
       <p class="hint">No account needed. Saved only on this device/browser.</p>
       <div id="customPresetList" class="custom-preset-list"></div>
+      </div>
     </section>
 
-    <section class="presets" aria-label="Reminder planner">
-      <h2>Reminder Planner</h2>
+    <section class="presets collapsible-card" aria-label="Reminder planner" data-collapsible>
+      <div class="section-head">
+        <h2>Reminder Planner</h2>
+        <button type="button" class="section-toggle" aria-expanded="true">Hide</button>
+      </div>
+      <div class="section-body">
       <div class="reminder-form">
         <label>
           <span class="label-text">Reminder type</span>
@@ -127,6 +136,7 @@
       </div>
       <p class="hint">Educational planner only. Follow your licensed clinician's instructions for any treatment plan.</p>
       <div id="reminderList" class="custom-preset-list"></div>
+      </div>
     </section>
 
     <section class="output-mode" aria-label="Result display mode">
@@ -139,18 +149,27 @@
       <p class="u100-note"><strong>U-100 reminder:</strong> 100 syringe units = 1 mL of liquid, not 100 mg.</p>
     </section>
 
-    <section class="safety-checklist" aria-label="Safety checklist">
-      <h2>Before You Use Any Number</h2>
+    <section class="safety-checklist collapsible-card" aria-label="Safety checklist" data-collapsible>
+      <div class="section-head">
+        <h2>Before You Use Any Number</h2>
+        <button type="button" class="section-toggle" aria-expanded="true">Hide</button>
+      </div>
+      <div class="section-body">
       <ul>
         <li>Confirm vial strength matches the label in your hand.</li>
         <li>Confirm your dose unit is correct: mcg vs mg.</li>
         <li>Confirm your syringe type is U-100 before using units.</li>
         <li>If unsure, stop and verify with a licensed clinician or pharmacist.</li>
       </ul>
+      </div>
     </section>
 
-    <section class="safety-checklist" aria-label="Sterile handling reminders">
-      <h2>Sterile Handling Reminders</h2>
+    <section class="safety-checklist collapsible-card" aria-label="Sterile handling reminders" data-collapsible>
+      <div class="section-head">
+        <h2>Sterile Handling Reminders</h2>
+        <button type="button" class="section-toggle" aria-expanded="true">Hide</button>
+      </div>
+      <div class="section-body">
       <ul>
         <li>Wash hands and clean the vial top with an alcohol swab before each puncture.</li>
         <li>Use a new sterile needle/syringe each time and avoid touching needle tips.</li>
@@ -158,6 +177,7 @@
         <li>For subcutaneous site prep and injection technique, follow your licensed clinician's instructions and the product labeling.</li>
         <li>Store mixed vials as directed by your pharmacist or product instructions.</li>
       </ul>
+      </div>
     </section>
 
     <section class="confidence-check" aria-label="Confidence check">
@@ -182,6 +202,10 @@
       <button id="copySummaryBtn" type="button" class="ghost-btn">Copy Summary</button>
       <button id="printBtn" type="button" class="ghost-btn">Print Summary</button>
     </div>
+    <label class="print-clean-toggle">
+      <input id="cleanPrintToggle" type="checkbox">
+      Use clean print report format
+    </label>
     <p id="copyStatus" class="hint hidden" aria-live="polite"></p>
 
     </section>
@@ -218,8 +242,12 @@
       <div id="libraryCards" class="library-cards"></div>
     </section>
 
-    <section class="research-links" aria-label="Trusted research links">
-      <h2>Trusted Research Links</h2>
+    <section class="research-links collapsible-card" aria-label="Trusted research links" data-collapsible>
+      <div class="section-head">
+        <h2>Trusted Research Links</h2>
+        <button type="button" class="section-toggle" aria-expanded="true">Hide</button>
+      </div>
+      <div class="section-body">
       <p class="hint">Use these sources to verify safety information and published evidence.</p>
       <ul>
         <li><a href="https://www.fda.gov/drugs" target="_blank" rel="noopener noreferrer">U.S. FDA: Drug Information</a></li>
@@ -228,6 +256,7 @@
         <li><a href="https://www.cdc.gov/medicationsafety/" target="_blank" rel="noopener noreferrer">CDC: Medication Safety</a></li>
         <li><a href="https://medlineplus.gov/druginformation.html" target="_blank" rel="noopener noreferrer">MedlinePlus: Drug Information</a></li>
       </ul>
+      </div>
     </section>
 
     <footer class="disclaimer">
